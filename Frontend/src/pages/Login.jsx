@@ -10,7 +10,9 @@ function Login() {
     password: "",
   });
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault(); // important
+
     try {
       const res = await axios.post(
         "http://localhost:5000/api/auth/login",
@@ -31,7 +33,7 @@ function Login() {
 
       navigate("/dashboard");
     } catch (error) {
-      console.log(error.response?.data); // 🔥 IMPORTANT DEBUG
+      console.log(error.response?.data);
       alert("Login failed");
     }
   };
@@ -40,28 +42,44 @@ function Login() {
     <div>
       <h1>Login</h1>
 
-      <input
-        placeholder="Email"
-        value={loginData.email}
-        onChange={(e) =>
-          setLoginData({ ...loginData, email: e.target.value })
-        }
-      />
+      <form onSubmit={handleLogin}>
+        <input
+          placeholder="Email"
+          value={loginData.email}
+          onChange={(e) =>
+            setLoginData({ ...loginData, email: e.target.value })
+          }
+        />
 
-      <br />
+        <br />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={loginData.password}
-        onChange={(e) =>
-          setLoginData({ ...loginData, password: e.target.value })
-        }
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={loginData.password}
+          onChange={(e) =>
+            setLoginData({ ...loginData, password: e.target.value })
+          }
+        />
 
-      <br />
+        <br />
 
-      <button onClick={handleLogin}>Login</button>
+        <button type="submit">Login</button>
+      </form>
+
+      <p style={{ marginTop: "10px" }}>
+        Don't have an account?{" "}
+        <span
+          style={{
+            color: "blue",
+            cursor: "pointer",
+            textDecoration: "underline",
+          }}
+          onClick={() => navigate("/")}
+        >
+          Register here
+        </span>
+      </p>
     </div>
   );
 }

@@ -1,106 +1,88 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  // 🔥 VALIDATION
-  const validate = () => {
-    if (!formData.name || !formData.email || !formData.password) {
-      alert("All fields are required");
-      return false;
-    }
-
-    if (formData.name.length < 3) {
-      alert("Name must be at least 3 characters");
-      return false;
-    }
-
-    if (!formData.email.includes("@")) {
-      alert("Enter valid email");
-      return false;
-    }
-
-    if (formData.password.length < 6) {
-      alert("Password must be at least 6 characters");
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleRegister = async () => {
-    if (!validate()) return;
+  const handleRegister = async (e) => {
+    e.preventDefault(); // important
 
     try {
       const res = await axios.post(
         "http://localhost:5000/api/auth/register",
-        formData
+        registerData
       );
 
-      alert(res.data.message);
-      navigate("/login");
-    } catch (err) {
-      console.log(err.response?.data);
-      alert("Registration Failed");
-    }
-  };
+      console.log("REGISTER RESPONSE:", res.data);
 
-  // 🔥 ENTER KEY SUPPORT
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleRegister();
+      alert("Register success");
+
+      // after register go to login
+      navigate("/login");
+    } catch (error) {
+      console.log(error.response?.data);
+      alert("Register failed");
+    }
   };
 
   return (
     <div>
       <h1>Register</h1>
 
-      <input
-        placeholder="Name"
-        value={formData.name}
-        onChange={(e) =>
-          setFormData({ ...formData, name: e.target.value })
-        }
-        onKeyDown={handleKeyDown}
-      />
+      <form onSubmit={handleRegister}>
+        <input
+          placeholder="Name"
+          value={registerData.name}
+          onChange={(e) =>
+            setRegisterData({ ...registerData, name: e.target.value })
+          }
+        />
 
-      <br />
+        <br />
 
-      <input
-        placeholder="Email"
-        value={formData.email}
-        onChange={(e) =>
-          setFormData({ ...formData, email: e.target.value })
-        }
-        onKeyDown={handleKeyDown}
-      />
+        <input
+          placeholder="Email"
+          value={registerData.email}
+          onChange={(e) =>
+            setRegisterData({ ...registerData, email: e.target.value })
+          }
+        />
 
-      <br />
+        <br />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={formData.password}
-        onChange={(e) =>
-          setFormData({ ...formData, password: e.target.value })
-        }
-        onKeyDown={handleKeyDown}
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={registerData.password}
+          onChange={(e) =>
+            setRegisterData({ ...registerData, password: e.target.value })
+          }
+        />
 
-      <br />
+        <br />
 
-      <button onClick={handleRegister}>Register</button>
+        <button type="submit">Register</button>
+      </form>
 
-      <p>
+      <p style={{ marginTop: "10px" }}>
         Already have an account?{" "}
-        <Link to="/login">Login here</Link>
+        <span
+          style={{
+            color: "blue",
+            cursor: "pointer",
+            textDecoration: "underline",
+          }}
+          onClick={() => navigate("/login")}
+        >
+          Login here
+        </span>
       </p>
     </div>
   );
