@@ -17,7 +17,7 @@ function Register() {
 
     try {
       const res = await axios.post(
-        "http://https://taskhub-project.onrender.com/api/auth/register",
+        "https://://taskhub-project.onrender.com/api/auth/register",
         registerData
       );
 

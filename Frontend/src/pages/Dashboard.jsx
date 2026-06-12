@@ -9,7 +9,7 @@ function Dashboard() {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("http://https://taskhub-project.onrender.com/api/tasks", {
+      const res = await axios.get("https://://taskhub-project.onrender.com/api/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
 

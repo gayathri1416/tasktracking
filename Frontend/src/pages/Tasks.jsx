@@ -19,7 +19,7 @@ function Tasks() {
 
   // GET TASKS
   const fetchTasks = async () => {
-    const res = await axios.get("http://https://taskhub-project.onrender.com/api/tasks", {
+    const res = await axios.get("https://://taskhub-project.onrender.com/api/tasks", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setTasks(res.data);
@@ -31,7 +31,7 @@ function Tasks() {
 
   // ADD TASK
   const addTask = async () => {
-    await axios.post("http://https://taskhub-project.onrender.com/api/tasks", taskData, {
+    await axios.post("https://://taskhub-project.onrender.com/api/tasks", taskData, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -42,7 +42,7 @@ function Tasks() {
   // UPDATE TASK
   const updateTask = async () => {
     await axios.put(
-      `http://https://taskhub-project.onrender.com/api/tasks/${editId}`,
+      `https://://taskhub-project.onrender.com/api/tasks/${editId}`,
       {
         title: taskData.title,
         description: taskData.description,
@@ -60,7 +60,7 @@ function Tasks() {
 
   // DELETE TASK
   const deleteTask = async (id) => {
-    await axios.delete(`http://https://taskhub-project.onrender.com/api/tasks/${id}`, {
+    await axios.delete(`https://://taskhub-project.onrender.com/api/tasks/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
