@@ -5,9 +5,10 @@ function Navbar() {
   const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  navigate("/");
+};
 
   return (
     <nav
