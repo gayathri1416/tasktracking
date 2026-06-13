@@ -1,18 +1,17 @@
 const mysql = require("mysql2");
 
 const db = mysql.createConnection({
-  host: "sql308.infinityfree.com",
-  user: "if0_42167282",
-  password: "qdwY5K7dQ0",
-  database: "if0_42167282_taskhub",
-  port: 3306
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 db.connect((err) => {
   if (err) {
     console.log("DB Error:", err);
   } else {
-    console.log("MySQL Connected");
+    console.log("MySQL Connected ✔");
   }
 });
 

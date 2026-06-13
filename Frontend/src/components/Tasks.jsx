@@ -14,7 +14,7 @@ function Tasks() {
 
     try {
       const res = await axios.get(
-        "https://://taskhub-project.onrender.com/api/tasks",
+        "http://localhost:5000/api/tasks",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,5 +50,6 @@ function Tasks() {
     </div>
   );
 }
+
 
 export default Tasks;

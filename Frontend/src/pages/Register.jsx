@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
 
 function Register() {
@@ -17,9 +16,9 @@ function Register() {
 
     try {
       const res = await axios.post(
-  "https://taskhub-project.onrender.com/api/auth/register",
-  registerData
-);
+        "http://localhost:5000/api/auth/register",
+        registerData
+      );
 
       console.log("REGISTER RESPONSE:", res.data);
 
