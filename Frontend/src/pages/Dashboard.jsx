@@ -9,7 +9,7 @@ function Dashboard() {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/tasks", {
+      const res = await axios.get("https://tasktracking-production.up.railway.app/api/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
