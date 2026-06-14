@@ -28,6 +28,7 @@
   font-weight: 900;
   margin-bottom: 1.5rem;
   background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
@@ -135,5 +136,51 @@
 
   .register-card h1 {
     font-size: 2.2rem;
+  }
+}
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+  .register-container {
+    padding: 15px;
+  }
+
+  .register-card {
+    width: 95%;
+    max-width: 100%;
+    padding: 25px 20px;
+  }
+
+  .register-card h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .register-card input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .password-box {
+    width: 100%;
+  }
+
+  .eye-btn {
+    right: 12px;
+    font-size: 18px;
+  }
+
+  .register-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .login-text {
+    font-size: 14px;
   }
 }

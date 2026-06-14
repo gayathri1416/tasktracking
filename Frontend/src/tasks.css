@@ -159,3 +159,51 @@ padding: 20px;
 flex-direction: column;
 }
 }
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+  .tasks-container {
+    padding: 10px;
+  }
+
+  .tasks-card {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+  }
+
+  .tasks-title {
+    font-size: 2rem;
+  }
+
+  .task-form input,
+  .task-form select {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .task-item {
+    padding: 15px;
+    margin-top: 15px;
+  }
+
+  .task-item h3 {
+    font-size: 18px;
+  }
+
+  .task-item p {
+    font-size: 14px;
+  }
+
+  .task-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-btn,
+  .logout-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+}

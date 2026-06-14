@@ -53,3 +53,42 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  .dashboard-card {
+    width: 100%;
+    padding: 20px;
+    margin-top: 15px;
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .dashboard-card p {
+    font-size: 14px;
+  }
+
+  .near-due-section h3 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .near-due-card {
+    padding: 15px;
+  }
+
+  .near-due-card h4 {
+    font-size: 16px;
+  }
+
+  .near-due-card p {
+    font-size: 14px;
+  }
+}
