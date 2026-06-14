@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../login.css";
 
 function Login() {
 const navigate = useNavigate();
@@ -28,7 +29,10 @@ try {
   }
 
   localStorage.setItem("token", res.data.token);
-  localStorage.setItem("user", JSON.stringify(res.data.user));
+  localStorage.setItem(
+    "user",
+    JSON.stringify(res.data.user)
+  );
 
   navigate("/dashboard");
 } catch (error) {
@@ -39,65 +43,79 @@ try {
 
 };
 
-return (
-<div style={{ textAlign: "center", marginTop: "50px" }}> <h1>Login</h1>
+return ( <div className="login-container"> <div className="login-card">
 
 
-  <form onSubmit={handleLogin}>
-    <input
-      type="email"
-      placeholder="Email"
-      value={loginData.email}
-      onChange={(e) =>
-        setLoginData({
-          ...loginData,
-          email: e.target.value,
-        })
-      }
-    />
+    <h1>TaskHub</h1>
 
-    <br />
-    <br />
+    <p className="subtitle">
+      Welcome . Sign in to continue.
+    </p>
 
-    <input
-      type={showPassword ? "text" : "password"}
-      placeholder="Password"
-      value={loginData.password}
-      onChange={(e) =>
-        setLoginData({
-          ...loginData,
-          password: e.target.value,
-        })
-      }
-    />
+    <form onSubmit={handleLogin}>
 
-    <button
-      type="button"
-      onClick={() => setShowPassword(!showPassword)}
-    >
-      {showPassword ? "🙈" : "👁️"}
-    </button>
+      <input
+        type="email"
+        placeholder="Enter your email"
+        value={loginData.email}
+        onChange={(e) =>
+          setLoginData({
+            ...loginData,
+            email: e.target.value,
+          })
+        }
+      />
 
-    <br />
-    <br />
+      <div className="password-box">
+        <input
+          type={
+            showPassword
+              ? "text"
+              : "password"
+          }
+          placeholder="Enter your password"
+          value={loginData.password}
+          onChange={(e) =>
+            setLoginData({
+              ...loginData,
+              password: e.target.value,
+            })
+          }
+        />
 
-    <button type="submit">Login</button>
-  </form>
+        <button
+          type="button"
+          className="eye-btn"
+          onClick={() =>
+            setShowPassword(!showPassword)
+          }
+        >
+          {showPassword ? "🙈" : "👁️"}
+        </button>
+      </div>
 
-  <p style={{ marginTop: "15px" }}>
-    Not Registered?{" "}
-    <span
-      onClick={() => navigate("/register")}
-      style={{
-        color: "blue",
-        cursor: "pointer",
-        textDecoration: "underline",
-        fontWeight: "bold",
-      }}
-    >
-      Register Here
-    </span>
-  </p>
+      <button
+        type="submit"
+        className="login-btn"
+      >
+        Login
+      </button>
+
+    </form>
+
+    <p className="register-text">
+      Don't have an account?{" "}
+      <span
+        className="register-link"
+        onClick={() =>
+          navigate("/register")
+        }
+      >
+        Register Here
+      </span>
+    </p>
+
+  </div>
 </div>
 
 

@@ -1,0 +1,55 @@
+/* Full page background */
+.dashboard-container {
+  
+  background: linear-gradient(140deg, #1a1a2eec, #034272, #0f3360);
+  font-family: "Poppins", sans-serif;
+  padding: 2rem;
+}
+
+/* Card styling */
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 
+    3px 3px 10px rgba(19, 1, 1, 0.6),
+    0 0 10px rgba(0, 0, 0, 0.7);
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 25px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Gradient title */
+.dashboard-title {
+  font-size: 2.4rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+ 
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.167);
+}
+
+/* Near due section */
+.near-due-section {
+  margin-top: 2rem;
+}
+
+.near-due-card {
+  border: 2px solid #ff416c;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(37, 6, 28, 0.85);
+  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.4);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
+import TaskNavbar from "../TaskNavbar";
+import "../tasks.css";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -17,11 +18,16 @@ function Tasks() {
     status: "Pending",
   });
 
-  // GET TASKS
   const fetchTasks = async () => {
-    const res = await axios.get("https://tasktracking-production.up.railway.app/api/tasks", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await axios.get(
+      "https://tasktracking-production.up.railway.app/api/tasks",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
     setTasks(res.data);
   };
 
@@ -29,28 +35,14 @@ function Tasks() {
     fetchTasks();
   }, []);
 
-  // ADD TASK
   const addTask = async () => {
-    await axios.post("https://tasktracking-production.up.railway.app/api/tasks", taskData, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    resetForm();
-    fetchTasks();
-  };
-
-  // UPDATE TASK
-  const updateTask = async () => {
-    await axios.put(
-      `https://tasktracking-production.up.railway.app/api/tasks/${editId}`,
+    await axios.post(
+      "https://tasktracking-production.up.railway.app/api/tasks",
+      taskData,
       {
-        title: taskData.title,
-        description: taskData.description,
-        due_date: taskData.due_date,
-        status: taskData.status,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
 
@@ -58,21 +50,41 @@ function Tasks() {
     fetchTasks();
   };
 
-  // DELETE TASK
+  const updateTask = async () => {
+    await axios.put(
+      `https://tasktracking-production.up.railway.app/api/tasks/${editId}`,
+      taskData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    resetForm();
+    fetchTasks();
+  };
+
   const deleteTask = async (id) => {
-    await axios.delete(`https://tasktracking-production.up.railway.app/api/tasks/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await axios.delete(
+      `https://tasktracking-production.up.railway.app/api/tasks/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     fetchTasks();
   };
 
-  // EDIT
   const handleEdit = (task) => {
     setTaskData({
       title: task.title,
       description: task.description,
-      due_date: task.due_date ? task.due_date.split("T")[0] : "",
+      due_date: task.due_date
+        ? task.due_date.split("T")[0]
+        : "",
       status: task.status,
     });
 
@@ -81,7 +93,6 @@ function Tasks() {
     setShowForm(true);
   };
 
-  // RESET
   const resetForm = () => {
     setTaskData({
       title: "",
@@ -95,93 +106,135 @@ function Tasks() {
     setEditId(null);
   };
 
-  // SAFE DATE FORMAT
   const formatDate = (date) => {
     if (!date) return "No date";
 
     const d = new Date(date);
+
     if (isNaN(d.getTime())) return "Invalid date";
 
     return d.toLocaleDateString("en-IN");
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      {/* NAVBAR INSIDE COMPONENT */}
-      <Navbar />
+    <div className="tasks-container">
+      <TaskNavbar />
 
-      <h1>My Tasks</h1>
+      <div className="tasks-card">
+        <h1 className="tasks-title">My Tasks</h1>
 
-      <button onClick={() => setShowForm(!showForm)}>
-        Add Task
-      </button>
-
-      {/* FORM */}
-      {showForm && (
-        <div>
-          <input
-            placeholder="Title"
-            value={taskData.title}
-            onChange={(e) =>
-              setTaskData({ ...taskData, title: e.target.value })
-            }
-          />
-
-          <input
-            placeholder="Description"
-            value={taskData.description}
-            onChange={(e) =>
-              setTaskData({ ...taskData, description: e.target.value })
-            }
-          />
-
-          <input
-            type="date"
-            value={taskData.due_date}
-            onChange={(e) =>
-              setTaskData({ ...taskData, due_date: e.target.value })
-            }
-          />
-
-          <select
-            value={taskData.status}
-            onChange={(e) =>
-              setTaskData({ ...taskData, status: e.target.value })
-            }
-          >
-            <option value="Pending">Pending</option>
-            <option value="Completed">Completed</option>
-          </select>
-
-          <button onClick={isEdit ? updateTask : addTask}>
-            {isEdit ? "Update Task" : "Add Task"}
-          </button>
-
-          <button onClick={resetForm}>Cancel</button>
-        </div>
-      )}
-
-      {/* TASK LIST */}
-      {tasks.map((t) => (
-        <div
-          key={t._id || t.id}
-          style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}
+        <button
+          className="nav-btn add-task-btn"
+          onClick={() => setShowForm(!showForm)}
         >
-          <h3>{t.title}</h3>
-          <p>{t.description}</p>
+          {showForm ? "Close Form" : "Add Task"}
+        </button>
 
-          <p>
-            <b>Due:</b> {formatDate(t.due_date)}
-          </p>
+        {showForm && (
+          <div className="task-form">
+            <input
+              placeholder="Title"
+              value={taskData.title}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  title: e.target.value,
+                })
+              }
+            />
 
-          <p>Status: {t.status}</p>
+            <input
+              placeholder="Description"
+              value={taskData.description}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  description: e.target.value,
+                })
+              }
+            />
 
-          <button onClick={() => handleEdit(t)}>Edit</button>
-          <button onClick={() => deleteTask(t._id || t.id)}>
-            Delete
-          </button>
-        </div>
-      ))}
+            <input
+              type="date"
+              value={taskData.due_date}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  due_date: e.target.value,
+                })
+              }
+            />
+
+            <select
+              value={taskData.status}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  status: e.target.value,
+                })
+              }
+            >
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+
+            <button
+              className="nav-btn"
+              onClick={isEdit ? updateTask : addTask}
+            >
+              {isEdit ? "Update Task" : "Add Task"}
+            </button>
+
+            <button
+              className="logout-btn"
+              onClick={resetForm}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+
+        {tasks.map((t) => (
+  <div
+    key={t._id || t.id}
+    className={`task-item ${
+      t.status === "Completed"
+        ? "completed"
+        : "pending"
+    }`}
+  >
+            <h3>{t.title}</h3>
+
+            <p>{t.description}</p>
+
+            <p>
+              <b>Due:</b> {formatDate(t.due_date)}
+            </p>
+
+            <p>
+              <b>Status:</b> {t.status}
+            </p>
+
+            <div className="task-actions">
+              <button
+                className="nav-btn"
+                onClick={() => handleEdit(t)}
+              >
+                Edit
+              </button>
+
+              <button
+                className="logout-btn"
+                onClick={() =>
+                  deleteTask(t._id || t.id)
+                }
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
