@@ -172,3 +172,28 @@
     width: 100%;
   }
 }
+@media (max-width: 768px) {
+
+  .login-container {
+    min-height: 100vh;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 25px 20px;
+
+    margin: 0 auto;
+
+    border-radius: 15px;
+
+    box-sizing: border-box;
+  }
+
+  .login-card h1 {
+    font-size: 2rem;
+  }
+}

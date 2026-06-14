@@ -64,3 +64,17 @@ box-shadow:
 0 0 40px rgba(255, 77, 122, 0.6),
 0 0 70px rgba(0, 162, 255, 0.35);
 }
+@media (max-width: 768px) {
+
+  .tasks-navbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .dashboard-btn,
+  .logout-btn {
+    width: 48%;
+  }
+}
