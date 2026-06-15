@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../login.css";
 
+import { requestNotificationPermission } from "../notifications";
 function Login() {
   const navigate = useNavigate();
 
@@ -47,8 +48,23 @@ function Login() {
       );
 
       alert(`Welcome, ${res.data.user?.name}!`);
+const fcmToken = await requestNotificationPermission();
 
-      navigate("/dashboard");
+if (fcmToken) {
+  await axios.post(
+    "https://tasktracking-production.up.railway.app/api/notifications/token",
+    {
+      token: fcmToken,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${res.data.token}`,
+      },
+    }
+  );
+}
+
+navigate("/dashboard");
     } catch (error) {
       const message =
         error.response?.data?.message ||
