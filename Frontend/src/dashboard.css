@@ -1,22 +1,42 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  width: 100%;
+}
+
 /* Full page background */
 .dashboard-container {
+  min-height: 100vh;
+  width: 100%;
 
   background: linear-gradient(170deg, #02626ea7, #04f8f468, #02626ea7);
+
   font-family: "Poppins", sans-serif;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 /* Card styling */
 .dashboard-card {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
+
   box-shadow:
     3px 3px 10px rgba(19, 1, 1, 0.6),
     0 0 10px rgba(0, 0, 0, 0.7);
+
   padding: 2rem;
   max-width: 800px;
-  margin: 0 auto;
-  margin-top: 25px;
+  margin: 25px auto;
+
   animation: fadeIn 0.8s ease-in-out;
 }
 
@@ -24,14 +44,42 @@
 .dashboard-title {
   font-size: 2.4rem;
   font-weight: 900;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+
   background: linear-gradient(180deg, #120e03be, #ff0088, #06fdb7f4);
   background-clip: text;
   -webkit-background-clip: text;
-  color: transparent;
 
+  color: transparent;
   -webkit-text-fill-color: transparent;
+
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.167);
+}
+
+.dashboard-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard-stats p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Overdue banner */
+.overdue-banner {
+  margin: 20px 0;
+  padding: 14px;
+
+  background: #ffebee;
+  color: #c62828;
+
+  border: 2px solid #ef5350;
+  border-radius: 12px;
+
+  font-weight: 700;
+  text-align: center;
 }
 
 /* Near due section */
@@ -39,13 +87,80 @@
   margin-top: 2rem;
 }
 
+.near-due-section h3 {
+  margin-bottom: 1rem;
+}
+
 .near-due-card {
-  border: 2.5px solid #10100d;
+  border: 2px solid #10100d;
   border-radius: 12px;
+
   padding: 1rem;
   margin-bottom: 1rem;
+
   background: rgba(19, 251, 239, 0.183);
 
+  transition: transform 0.2s ease;
+}
+
+.near-due-card:hover {
+  transform: translateY(-3px);
+}
+
+.near-due-card h4 {
+  margin-bottom: 0.5rem;
+}
+
+.near-due-card p {
+  margin-bottom: 0.5rem;
+}
+
+/* Status labels */
+.due-label {
+  display: inline-block;
+
+  margin-top: 10px;
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.due-label.today {
+  background: #e53935;
+}
+
+.due-label.tomorrow {
+  background: #fb8c00;
+}
+
+.due-label.day-after {
+  background: #1e88e5;
+}
+
+.due-label.overdue {
+  background: #c62828;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.6);
+  }
+
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(198, 40, 40, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(198, 40, 40, 0);
+  }
 }
 
 /* Animation */
@@ -61,16 +176,13 @@
   }
 }
 
-/* MOBILE RESPONSIVE */
+/* Mobile */
 @media (max-width: 768px) {
-
   .dashboard-container {
     min-height: 100vh;
     width: 100%;
 
- background: linear-gradient(170deg, #02626ea7, #04f8f468, #02626ea7);
-
-    font-family: "Poppins", sans-serif;
+    background: linear-gradient(170deg, #02626ea7, #04f8f468, #02626ea7);
 
     padding: 20px;
     box-sizing: border-box;
@@ -78,13 +190,8 @@
 
   .dashboard-card {
     width: 100%;
-    max-width: 800px;
-
-    margin: 20px auto;
-
     padding: 25px;
-
-    box-sizing: border-box;
+    margin: 20px auto;
   }
 
   .dashboard-title {
@@ -92,7 +199,7 @@
     text-align: center;
   }
 
-  .dashboard-card p {
+  .dashboard-stats p {
     font-size: 14px;
   }
 
@@ -111,5 +218,10 @@
 
   .near-due-card p {
     font-size: 14px;
+  }
+
+  .due-label {
+    font-size: 12px;
+    padding: 5px 10px;
   }
 }

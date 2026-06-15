@@ -4,122 +4,128 @@ import { useNavigate } from "react-router-dom";
 import "../login.css";
 
 function Login() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-const [loginData, setLoginData] = useState({
-email: "",
-password: "",
-});
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
 
-const handleLogin = async (e) => {
-e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-try {
-  const res = await axios.post(
-    "https://tasktracking-production.up.railway.app/api/auth/login",
-    loginData
-  );
+    if (!emailRegex.test(loginData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
-  if (!res.data.token) {
-    alert("No token received");
-    return;
-  }
+    try {
+      const res = await axios.post(
+        "https://tasktracking-production.up.railway.app/api/auth/login",
+        loginData
+      );
 
-  localStorage.setItem("token", res.data.token);
-  localStorage.setItem(
-    "user",
-    JSON.stringify(res.data.user)
-  );
+      if (!res.data.token) {
+        alert("No token received.");
+        return;
+      }
 
-  navigate("/dashboard");
-} catch (error) {
-  console.log(error.response?.data);
-  alert("Login Failed");
-}
+      localStorage.setItem("token", res.data.token);
 
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
 
-};
+      localStorage.setItem(
+        "userName",
+        res.data.user?.name || ""
+      );
 
-return ( <div className="login-container"> <div className="login-card">
+      alert(`Welcome, ${res.data.user?.name}!`);
 
+      navigate("/dashboard");
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        "Login failed.";
 
-    <h1>TaskHub</h1>
+      alert(message);
+    }
+  };
 
-    <p className="subtitle">
-      Welcome . Sign in to continue.
-    </p>
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        <h1>TaskHub</h1>
 
-    <form onSubmit={handleLogin}>
+        <p className="subtitle">
+          Welcome. Sign in to continue.
+        </p>
 
-      <input
-        type="email"
-        placeholder="Enter your email"
-        value={loginData.email}
-        onChange={(e) =>
-          setLoginData({
-            ...loginData,
-            email: e.target.value,
-          })
-        }
-      />
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={loginData.email}
+            onChange={(e) =>
+              setLoginData({
+                ...loginData,
+                email: e.target.value,
+              })
+            }
+          />
 
-      <div className="password-box">
-        <input
-          type={
-            showPassword
-              ? "text"
-              : "password"
-          }
-          placeholder="Enter your password"
-          value={loginData.password}
-          onChange={(e) =>
-            setLoginData({
-              ...loginData,
-              password: e.target.value,
-            })
-          }
-        />
+          <div className="password-box">
+            <input
+              type={
+                showPassword ? "text" : "password"
+              }
+              placeholder="Enter your password"
+              value={loginData.password}
+              onChange={(e) =>
+                setLoginData({
+                  ...loginData,
+                  password: e.target.value,
+                })
+              }
+            />
 
-        <button
-          type="button"
-          className="eye-btn"
-          onClick={() =>
-            setShowPassword(!showPassword)
-          }
-        >
-          {showPassword ? "🙈" : "👁️"}
-        </button>
+            <button
+              type="button"
+              className="eye-btn"
+              onClick={() =>
+                setShowPassword(!showPassword)
+              }
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            className="login-btn"
+          >
+            Login
+          </button>
+        </form>
+
+        <p className="register-text">
+          Don't have an account?{" "}
+          <span
+            className="register-link"
+            onClick={() => navigate("/register")}
+          >
+            Register Here
+          </span>
+        </p>
       </div>
-
-      <button
-        type="submit"
-        className="login-btn"
-      >
-        Login
-      </button>
-
-    </form>
-
-    <p className="register-text">
-      Don't have an account?{" "}
-      <span
-        className="register-link"
-        onClick={() =>
-          navigate("/register")
-        }
-      >
-        Register Here
-      </span>
-    </p>
-
-  </div>
-</div>
-
-
-);
+    </div>
+  );
 }
 
 export default Login;

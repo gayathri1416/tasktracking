@@ -19,63 +19,81 @@ function Tasks() {
   });
 
   const fetchTasks = async () => {
-    const res = await axios.get(
-      "https://tasktracking-production.up.railway.app/api/tasks",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    try {
+      const res = await axios.get(
+        "https://tasktracking-production.up.railway.app/api/tasks",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    setTasks(res.data);
+      setTasks(res.data);
+    } catch (err) {
+      console.log("Error fetching tasks:", err);
+    }
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    if (token) {
+      fetchTasks();
+    }
+  }, [token]);
 
   const addTask = async () => {
-    await axios.post(
-      "https://tasktracking-production.up.railway.app/api/tasks",
-      taskData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    try {
+      await axios.post(
+        "https://tasktracking-production.up.railway.app/api/tasks",
+        taskData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    resetForm();
-    fetchTasks();
+      resetForm();
+      fetchTasks();
+    } catch (err) {
+      console.log("Error adding task:", err);
+    }
   };
 
   const updateTask = async () => {
-    await axios.put(
-      `https://tasktracking-production.up.railway.app/api/tasks/${editId}`,
-      taskData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    try {
+      await axios.put(
+        `https://tasktracking-production.up.railway.app/api/tasks/${editId}`,
+        taskData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    resetForm();
-    fetchTasks();
+      resetForm();
+      fetchTasks();
+    } catch (err) {
+      console.log("Error updating task:", err);
+    }
   };
 
   const deleteTask = async (id) => {
-    await axios.delete(
-      `https://tasktracking-production.up.railway.app/api/tasks/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    try {
+      await axios.delete(
+        `https://tasktracking-production.up.railway.app/api/tasks/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    fetchTasks();
+      fetchTasks();
+    } catch (err) {
+      console.log("Error deleting task:", err);
+    }
   };
 
   const handleEdit = (task) => {
@@ -106,6 +124,12 @@ function Tasks() {
     setEditId(null);
   };
 
+  const getDateOnly = (date) => {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  };
+
   const formatDate = (date) => {
     if (!date) return "No date";
 
@@ -113,7 +137,70 @@ function Tasks() {
 
     if (isNaN(d.getTime())) return "Invalid date";
 
-    return d.toLocaleDateString("en-IN");
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = String(d.getFullYear()).slice(-2);
+
+    return `${day}-${month}-${year}`;
+  };
+
+  const getTaskClass = (task) => {
+    if (
+      task.status === "Completed" ||
+      task.progress === 100
+    ) {
+      return "completed";
+    }
+
+    if (!task.due_date) {
+      return "pending";
+    }
+
+    const today = getDateOnly(new Date());
+    const due = getDateOnly(task.due_date);
+
+    const diffDays = Math.round(
+      (due - today) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays < 0) return "overdue";
+    if (diffDays === 0) return "today";
+    if (diffDays === 1) return "tomorrow";
+    if (diffDays === 2) return "day-after";
+
+    return "pending";
+  };
+
+  const getTaskLabel = (task) => {
+    if (
+      task.status === "Completed" ||
+      task.progress === 100
+    ) {
+      return "Completed";
+    }
+
+    if (!task.due_date) {
+      return "No Due Date";
+    }
+
+    const today = getDateOnly(new Date());
+    const due = getDateOnly(task.due_date);
+
+    const diffDays = Math.round(
+      (due - today) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays < 0) {
+      return `Overdue by ${Math.abs(diffDays)} day${
+        Math.abs(diffDays) > 1 ? "s" : ""
+      }`;
+    }
+
+    if (diffDays === 0) return "Due Today";
+    if (diffDays === 1) return "Due Tomorrow";
+    if (diffDays === 2) return "Due Day After Tomorrow";
+
+    return "Pending";
   };
 
   return (
@@ -195,24 +282,22 @@ function Tasks() {
         )}
 
         {tasks.map((t) => (
-  <div
-    key={t._id || t.id}
-    className={`task-item ${
-      t.status === "Completed"
-        ? "completed"
-        : "pending"
-    }`}
-  >
+          <div
+            key={t._id || t.id}
+            className={`task-item ${getTaskClass(t)}`}
+          >
             <h3>{t.title}</h3>
 
             <p>{t.description}</p>
 
             <p>
-              <b>Due:</b> {formatDate(t.due_date)}
+              <strong>Due Date:</strong>{" "}
+              {formatDate(t.due_date)}
             </p>
 
             <p>
-              <b>Status:</b> {t.status}
+              <strong>Status:</strong>{" "}
+              {getTaskLabel(t)}
             </p>
 
             <div className="task-actions">
