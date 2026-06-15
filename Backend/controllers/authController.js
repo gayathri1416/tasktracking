@@ -6,27 +6,73 @@ const jwt = require("jsonwebtoken");
 const register = (req, res) => {
   const { name, email, password } = req.body;
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  if (!name || !name.trim()) {
+    return res.status(400).json({
+      message: "Please enter your name.",
+    });
+  }
+
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      message: "Please enter a valid email address.",
+    });
+  }
+
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      message:
+        "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.",
+    });
+  }
+
   db.query(
     "SELECT * FROM users WHERE email = ?",
     [email],
     async (err, result) => {
-      if (err) return res.status(500).json(err);
-
-      if (result.length > 0) {
-        return res.status(400).json({ message: "User already exists" });
+      if (err) {
+        return res.status(500).json({
+          message: "Server error.",
+        });
       }
 
-      const hashed = await bcrypt.hash(password, 10);
+      if (result.length > 0) {
+        return res.status(409).json({
+          message: "User already exists. Please login.",
+        });
+      }
 
-      db.query(
-        "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-        [name, email, hashed],
-        (err) => {
-          if (err) return res.status(500).json(err);
+      try {
+        const hashedPassword = await bcrypt.hash(
+          password,
+          10
+        );
 
-          res.json({ message: "User registered" });
-        }
-      );
+        db.query(
+          "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+          [name, email, hashedPassword],
+          (err) => {
+            if (err) {
+              return res.status(500).json({
+                message: "Server error.",
+              });
+            }
+
+            return res.status(201).json({
+              message:
+                "Registration successful. Please login.",
+            });
+          }
+        );
+      } catch (error) {
+        return res.status(500).json({
+          message: "Server error.",
+        });
+      }
     }
   );
 };
@@ -39,36 +85,58 @@ const login = (req, res) => {
     "SELECT * FROM users WHERE email = ?",
     [email],
     async (err, result) => {
-      if (err) return res.status(500).json(err);
+      if (err) {
+        return res.status(500).json({
+          message: "Server error.",
+        });
+      }
 
       if (result.length === 0) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({
+          message:
+            "Account not found. Please register first.",
+        });
       }
 
       const user = result[0];
 
-      const valid = await bcrypt.compare(password, user.password);
+      try {
+        const valid = await bcrypt.compare(
+          password,
+          user.password
+        );
 
-      if (!valid) {
-        return res.status(401).json({ message: "Invalid password" });
+        if (!valid) {
+          return res.status(401).json({
+            message: "Invalid email or password.",
+          });
+        }
+
+        const token = jwt.sign(
+          { id: user.id },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+
+        return res.status(200).json({
+          message: `Welcome, ${user.name}!`,
+          token,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          },
+        });
+      } catch (error) {
+        return res.status(500).json({
+          message: "Server error.",
+        });
       }
-
-      const token = jwt.sign(
-        { id: user.id },
-        process.env.JWT_SECRET,
-        { expiresIn: "1d" }
-      );
-
-      res.json({
-        token,
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        },
-      });
     }
   );
 };
 
-module.exports = { register, login };
+module.exports = {
+  register,
+  login,
+};
