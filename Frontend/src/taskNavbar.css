@@ -5,14 +5,11 @@ align-items: center;
 
 padding: 15px 25px;
 
-background: linear-gradient(
-135deg,
-#0f172a,
-#1e293b,
-#334155
-);
+background:rgba(0, 128, 128, 0.586);
 
-box-shadow: 0px 2px 3px white;
+box-shadow: 0px 2px 3px rgba(255,255,255,0.3);
+
+
 }
 
 /* DASHBOARD LEFT */
@@ -32,8 +29,6 @@ padding: 12px 24px;
 border-radius: 14px;
 border: none;
 
-background: #2b2f5b;
-color: #ff4d7a;
 
 font-size: 16px;
 font-weight: 700;
@@ -43,27 +38,10 @@ cursor: pointer;
 transition: all 0.3s ease;
 }
 
-.nav-btn:hover {
-transform: translateY(-2px);
 
-box-shadow:
-0 0 10px rgba(255, 77, 122, 0.8),
-0 0 20px rgba(255, 77, 122, 0.7),
-0 0 40px rgba(255, 77, 122, 0.6);
-
-color: #ff5c85;
-}
 
 /* LOGOUT SPECIAL GLOW */
-.logout-btn:hover {
-transform: scale(1.05);
 
-box-shadow:
-0 0 10px rgba(255, 77, 122, 0.8),
-0 0 20px rgba(255, 77, 122, 0.7),
-0 0 40px rgba(255, 77, 122, 0.6),
-0 0 70px rgba(0, 162, 255, 0.35);
-}
 @media (max-width: 768px) {
 
   .tasks-navbar {

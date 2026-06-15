@@ -1,7 +1,7 @@
 /* Full page background */
 .dashboard-container {
   
-  background: linear-gradient(140deg, #1a1a2eec, #034272, #0f3360);
+  background: linear-gradient(170deg, #02626ea7,#04f8f468, #02626ea7);
   font-family: "Poppins", sans-serif;
   padding: 2rem;
 }
@@ -25,7 +25,7 @@
   font-size: 2.4rem;
   font-weight: 900;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  background: linear-gradient(180deg,  #120e03be, #ff0088, #06fdb7f4);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -40,12 +40,12 @@
 }
 
 .near-due-card {
-  border: 2px solid #ff416c;
+  border: 2px solid #d6d329;
   border-radius: 12px;
   padding: 1rem;
   margin-bottom: 1rem;
   background: rgba(37, 6, 28, 0.85);
-  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.4);
+  box-shadow: 0 4px 12px rgba(237, 243, 82, 0.855);
 }
 
 /* Animation */

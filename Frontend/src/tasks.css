@@ -1,11 +1,7 @@
 .tasks-container {
 min-height: 100vh;
-background: linear-gradient(
-140deg,
-#0f172a,
-#1e293b,
-#334155
-);
+  background: linear-gradient(170deg, #02626ea7,#04f8f468, #02626ea7);
+
 font-family: "Poppins", sans-serif;
 padding: 30px;
 }
@@ -128,8 +124,8 @@ padding: 12px 24px;
 border: none;
 border-radius: 14px;
 
-background: #2b2f5b;
-color: #ff4d7a;
+background: #fefb55;
+color: #0b0b0a;
 
 font-size: 15px;
 font-weight: 700;
@@ -144,10 +140,10 @@ transition: all 0.3s ease;
 transform: translateY(-2px);
 
 box-shadow:
-0 0 7px rgba(255,77,122,0.8),
-0 2px 7px rgb(255, 77, 122);
+0 0 4px rgb(17, 17, 14),
+0 2px 4px rgb(12, 11, 9);
 
-color: #ff5c85;
+color: rgb(119, 2, 177);
 }
 
 @media (max-width: 768px) {
