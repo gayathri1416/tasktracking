@@ -27,7 +27,7 @@
   font-size: 2.8rem;
   font-weight: 900;
   margin-bottom: 1.5rem;
-  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  background: linear-gradient(190deg,  #120e03be, #ff0088, #06fdb7f4);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -50,7 +50,7 @@
 
 .register-card input:focus {
   background: #fff;
-  box-shadow: 0 0 8px rgb(255, 251, 0);
+  box-shadow: 0 0 8px rgb(222, 30, 248);
   outline: none;
 }
 
@@ -87,8 +87,8 @@
 .register-btn {
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(90deg, #ff416c, #ff4b2b, #ff9a00);
-  color: #fff;
+  background:#060605;
+  color: #ffffff;
   border: none;
   border-radius: 12px;
   font-size: 1.2rem;
@@ -100,7 +100,7 @@
 
 .register-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(255, 65, 108, 0.6);
+  box-shadow: 0 10px 12px rgba(239, 183, 62, 0.6);
 }
 
 /* Register text */
