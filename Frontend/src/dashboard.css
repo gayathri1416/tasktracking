@@ -1,7 +1,7 @@
 /* Full page background */
 .dashboard-container {
-  
-  background: linear-gradient(170deg, #02626ea7,#04f8f468, #02626ea7);
+
+  background: linear-gradient(170deg, #02626ea7, #04f8f468, #02626ea7);
   font-family: "Poppins", sans-serif;
   padding: 2rem;
 }
@@ -10,7 +10,7 @@
 .dashboard-card {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  box-shadow: 
+  box-shadow:
     3px 3px 10px rgba(19, 1, 1, 0.6),
     0 0 10px rgba(0, 0, 0, 0.7);
   padding: 2rem;
@@ -25,11 +25,11 @@
   font-size: 2.4rem;
   font-weight: 900;
   margin-bottom: 1rem;
-  background: linear-gradient(180deg,  #120e03be, #ff0088, #06fdb7f4);
+  background: linear-gradient(180deg, #120e03be, #ff0088, #06fdb7f4);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
- 
+
   -webkit-text-fill-color: transparent;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.167);
 }
@@ -45,44 +45,47 @@
   padding: 1rem;
   margin-bottom: 1rem;
   background: rgba(19, 251, 239, 0.183);
-  
+
 }
 
 /* Animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
 
   .dashboard-container {
-  min-height: 100vh;
-  width: 100%;
+    min-height: 100vh;
+    width: 100%;
 
-  background: linear-gradient(
-    140deg,
-    #1a1a2e,
-    #034272,
-    #0f3360
-  );
+ background: linear-gradient(170deg, #02626ea7, #04f8f468, #02626ea7);
 
-  font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
 
-  padding: 20px;
-  box-sizing: border-box;
-}
+    padding: 20px;
+    box-sizing: border-box;
+  }
 
   .dashboard-card {
-  width: 100%;
-  max-width: 800px;
+    width: 100%;
+    max-width: 800px;
 
-  margin: 20px auto;
+    margin: 20px auto;
 
-  padding: 25px;
+    padding: 25px;
 
-  box-sizing: border-box;
-}
+    box-sizing: border-box;
+  }
 
   .dashboard-title {
     font-size: 2rem;
