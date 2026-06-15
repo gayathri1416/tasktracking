@@ -40,12 +40,12 @@
 }
 
 .near-due-card {
-  border: 2px solid #d6d329;
+  border: 2.5px solid #10100d;
   border-radius: 12px;
   padding: 1rem;
   margin-bottom: 1rem;
-  background: rgba(37, 6, 28, 0.85);
-  box-shadow: 0 4px 12px rgba(237, 243, 82, 0.855);
+  background: rgba(19, 251, 239, 0.183);
+  
 }
 
 /* Animation */
