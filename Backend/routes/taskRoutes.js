@@ -9,6 +9,13 @@ const {
 } = require("../controllers/taskController");
 
 const auth = require("../middleware/authMiddleware");
+console.log({
+  addTask,
+  getAllTasks,
+  updateTask,
+  deleteTask,
+  auth,
+});
 
 router.get("/", auth, getAllTasks);
 router.post("/", auth, addTask);

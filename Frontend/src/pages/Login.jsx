@@ -118,7 +118,7 @@ navigate("/dashboard");
                 setShowPassword(!showPassword)
               }
             >
-              {showPassword ? "🙈" : "👁️"}
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
 

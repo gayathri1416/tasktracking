@@ -83,19 +83,19 @@
 .eye-btn {
   position: absolute;
   right: 12px; /* flush at end */
-  top: 50%;
+  
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 0.5rem;
   color: #444;
   transition: transform 0.2s ease, color 0.3s ease;
 }
 
 .eye-btn:hover {
   transform: translateY(-50%) scale(1.2);
-  color: #ff416d86;
+  color: #4dd4ee86;
 }
 
 /* Login button */
