@@ -25,44 +25,64 @@ const sendDueTaskNotifications = async () => {
 
   db.query(query, async (err, results) => {
     if (err) {
-      console.error("Notification query error:", err);
+      console.error("❌ Notification query error:", err);
       return;
     }
 
-    console.log("\n=== Notification Debug ===");
-    console.log(`Found ${results.length} due tasks`);
+    console.log("\n========== Notification Debug ==========");
+    console.log(`📌 Found ${results.length} due tasks`);
 
-    if (results.length > 0) {
-      console.table(
-        results.map((task) => ({
-          id: task.id,
-          title: task.title,
-          due_date: task.due_date,
-          ist_due_date: task.ist_due_date,
-          today_ist: task.today_ist,
-          status: task.status,
-        }))
-      );
-    }
+    console.table(
+      results.map((task) => ({
+        id: task.id,
+        title: task.title,
+        due_date: task.due_date,
+        ist_due_date: task.ist_due_date,
+        today_ist: task.today_ist,
+        status: task.status,
+      }))
+    );
 
     for (const task of results) {
+      console.log(
+        `📤 Sending notification for Task ID: ${task.id}, Title: ${task.title}`
+      );
+
       try {
-        await getMessaging().send({
+        const response = await getMessaging().send({
           token: task.fcm_token,
+
           notification: {
             title: "Task Reminder",
             body: `"${task.title}" is due today.`,
           },
+
+          android: {
+            notification: {
+              tag: `task-${task.id}`, // unique notification
+              channelId: "task-reminders",
+            },
+          },
+
+          data: {
+            taskId: String(task.id),
+            title: task.title,
+          },
         });
 
-        console.log(`✅ Notification sent for task: ${task.title}`);
+        console.log(
+          `✅ Notification sent for task ${task.id}: ${task.title}`
+        );
+        console.log(`Firebase message ID: ${response}`);
       } catch (error) {
         console.error(
           `❌ Failed to send notification for task ${task.id}:`,
-          error.message
+          error
         );
       }
     }
+
+    console.log("========== End Notification Debug ==========\n");
   });
 };
 
@@ -76,7 +96,7 @@ cron.schedule("0 17 * * *", sendDueTaskNotifications, {
   timezone: "Asia/Kolkata",
 });
 
-console.log("Notification scheduler started");
+console.log("🚀 Notification scheduler started");
 
-// TEMPORARY: run immediately for testing
-// sendDueTaskNotifications(); 
+// TEMPORARY: Uncomment for testing
+// sendDueTaskNotifications();
