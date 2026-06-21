@@ -98,5 +98,4 @@ cron.schedule("0 17 * * *", sendDueTaskNotifications, {
 
 console.log("🚀 Notification scheduler started");
 
-// TEMPORARY: Uncomment for testing
-// sendDueTaskNotifications();
+sendDueTaskNotifications();
