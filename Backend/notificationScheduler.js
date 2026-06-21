@@ -96,6 +96,9 @@ cron.schedule("0 17 * * *", sendDueTaskNotifications, {
   timezone: "Asia/Kolkata",
 });
 
+cron.schedule("20 17 * * *", sendDueTaskNotifications, {
+  timezone: "Asia/Kolkata",
+});
 console.log("🚀 Notification scheduler started");
 
 sendDueTaskNotifications();
